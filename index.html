@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>「Insight｜内容实验室」灵感捕捉计划 - 公示系统</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text-main: #000000;
+            --text-muted: #888888;
+            --text-dim: #cccccc;
+            --accent-red: #ff3e3e;
+            --divider: rgba(0, 0, 0, 0.06);
+            --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: "SF Mono", "JetBrains Mono", monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.4;
+            padding: 8vh 6vw;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        /* --- Header Section --- */
+        header {
+            margin-bottom: 8vh;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            /* Adapt to content while maintaining center balance */
+            gap: 40px;
+            align-items: end;
+            /* Crucial for bottom alignment alignment */
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .brand-area {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .meta-status {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .pulse-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent-red);
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .pulse-dot::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border: 1px solid var(--accent-red);
+            border-radius: 50%;
+            animation: ringPulse 2s infinite;
+        }
+
+        @keyframes ringPulse {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        .brand-logo {
+            height: 44px;
+            width: auto;
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            letter-spacing: -0.06em;
+            line-height: 1;
+            margin-left: -6px;
+            font-style: italic;
+        }
+
+        .brand-sub {
+            font-size: 1rem;
+            color: var(--text-muted);
+            max-width: 500px;
+            margin-top: 20px;
+        }
+
+        /* --- Hero Links (Vertical & Large) --- */
+        .hero-links {
+            display: flex;
+            flex-direction: column;
+            border-top: 1px solid var(--text-main);
+            margin-top: 0;
+            /* Let grid alignment take over */
+            padding-bottom: 2px;
+            /* Fine-tune bottom alignment */
+            width: 340px;
+            /* Maintain consistent width */
+            justify-self: end;
+            /* Fix to right side */
+        }
+
+        .hero-link-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 0;
+            /* Reduced from 30px */
+            border-bottom: 1px solid var(--divider);
+            text-decoration: none;
+            color: var(--text-main);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .hero-link-item:hover {
+            padding-left: 20px;
+            color: var(--accent-red);
+        }
+
+        .hl-label {
+            font-size: 10px;
+            /* Reduced from 11px */
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .hl-title {
+            font-size: 18px;
+            /* Reduced from 24px */
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .hl-arrow {
+            font-size: 18px;
+            /* Reduced from 24px */
+            font-weight: 300;
+            transform: translateX(0);
+            transition: transform 0.4s;
+        }
+
+        .hero-link-item:hover .hl-arrow {
+            transform: translateX(10px);
+        }
+
+        /* --- Featured Card --- */
+        .featured-area {
+            display: flex;
+            flex-direction: column;
+            justify-self: center;
+            /* Center horizontally in the grid */
+            margin-bottom: 40px;
+            /* Lift it up from the bottom baseline */
+        }
+
+        .featured-card {
+            border: 1px solid rgba(255, 62, 62, 0.15);
+            padding: 24px;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            background: linear-gradient(135deg, #ffffff 0%, #fffafa 100%);
+            position: relative;
+            display: block;
+        }
+
+        .featured-card:hover {
+            border-color: var(--accent-red);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(255, 62, 62, 0.08);
+            background: linear-gradient(135deg, #ffffff 0%, #fff5f5 100%);
+        }
+
+        .fc-tag {
+            font-size: 9px;
+            font-weight: 800;
+            color: var(--accent-red);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .fc-title {
+            font-size: 19px;
+            font-weight: 800;
+            margin-bottom: 0;
+            letter-spacing: -0.02em;
+            flex: 1;
+            white-space: nowrap;
+        }
+
+        .fc-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .fc-arrow {
+            font-size: 20px;
+            font-weight: 300;
+            color: var(--accent-red);
+            opacity: 0;
+            transform: translateX(-15px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .featured-card:hover .fc-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .fc-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 8px;
+            display: block;
+        }
+
+        /* --- Event Progress --- */
+        .event-progress {
+            margin-top: 20px;
+            /* Reduced from 40px to move it up */
+            max-width: 440px;
+            animation: fadeIn 1s ease forwards 0.6s;
+            opacity: 0;
+        }
+
+        .ep-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 10px;
+        }
+
+        .ep-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .ep-status {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent-red);
+        }
+
+        .ep-track {
+            height: 2px;
+            background: var(--divider);
+            position: relative;
+            border-radius: 1px;
+            overflow: hidden;
+        }
+
+        .ep-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: var(--accent-red);
+            width: 0;
+            transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .ep-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-family: var(--font-mono);
+            font-size: 9px;
+            color: var(--text-dim);
+            letter-spacing: 0.05em;
+        }
+
+        /* --- Decorative Transition (Wave Pen with Trail) --- */
+        .transition-area {
+            height: 5vh;
+            margin-bottom: 3vh;
+            border-bottom: 1px solid var(--divider);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            /* Center vertically for wave space */
+            padding: 0;
+        }
+
+        .pen-track {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--divider);
+        }
+
+        .pen-trail {
+            position: absolute;
+            bottom: 0px;
+            height: 1.5px;
+            background: var(--accent-red);
+            width: 0%;
+            animation: trailWrite 16s infinite ease-in-out;
+            opacity: 0.6;
+            transform-origin: left;
+        }
+
+        @keyframes trailWrite {
+            0% {
+                left: 50%;
+                width: 0%;
+                transform: scaleX(1);
+            }
+
+            25% {
+                left: 5%;
+                width: 45%;
+                transform: scaleX(-1);
+            }
+
+            50% {
+                left: 5%;
+                width: 85%;
+                transform: scaleX(1);
+            }
+
+            75% {
+                left: 50%;
+                width: 40%;
+                transform: scaleX(1);
+            }
+
+            100% {
+                left: 50%;
+                width: 0%;
+                transform: scaleX(1);
+            }
+        }
+
+        /* --- Grid Section --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background-color: var(--divider);
+            border-bottom: 1px solid var(--divider);
+            opacity: 0;
+            animation: fadeIn 1.2s ease forwards 0.4s;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .card {
+            background-color: var(--bg);
+            padding: 60px 40px;
+            /* Slightly reduced padding to maximize content space */
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 640px;
+            /* Fixed height for consistent grid layout */
+            transition: background-color 0.4s;
+        }
+
+        .card:hover {
+            background-color: #fafafa;
+        }
+
+        .bg-number {
+            position: absolute;
+            top: -10px;
+            right: -20px;
+            font-size: 220px;
+            font-weight: 950;
+            color: rgba(0, 0, 0, 0.025);
+            user-select: none;
+            pointer-events: none;
+            line-height: 1;
+            font-family: var(--font-mono);
+        }
+
+        .award-info {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 50px;
+        }
+
+        .award-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .award-name {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+        }
+
+        .award-criteria {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* --- List Section --- */
+        .candidate-list {
+            position: relative;
+            z-index: 1;
+            list-style: none;
+            overflow-y: auto;
+            padding-right: 12px;
+            margin-right: -12px;
+        }
+
+        /* Minimalist Scrollbar */
+        .candidate-list::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .candidate-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .candidate-list::-webkit-scrollbar-thumb {
+            background: var(--divider);
+            border-radius: 10px;
+        }
+
+        .candidate-list:hover::-webkit-scrollbar-thumb {
+            background: var(--text-dim);
+        }
+
+        .candidate-item {
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+            transition: all 0.3s;
+        }
+
+        .candidate-item:last-child {
+            border-bottom: none;
+        }
+
+        .card:hover .candidate-item {
+            transform: translateX(6px);
+        }
+
+        .c-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .c-name {
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: -0.01em;
+        }
+
+        .c-dept {
+            font-size: 9px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+            margin-top: 1px;
+        }
+
+        .c-email {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            color: var(--text-dim);
+            margin-top: 4px;
+            filter: grayscale(1);
+        }
+
+        .c-score {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .card:hover .c-score {
+            color: var(--accent-red);
+        }
+
+        /* --- Loader / Footer --- */
+        #loader {
+            padding: 100px;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.4em;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        footer {
+            margin-top: 10vh;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            border-top: 1px solid var(--divider);
+            padding-top: 40px;
+        }
+
+        @media (max-width: 1400px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            header {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .hero-links {
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 40px 24px;
+            }
+
+            h1 {
+                font-size: 2.8rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 60px 30px;
+                min-height: auto;
+            }
+
+            .brand-logo {
+                height: 32px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="brand-area">
+                <div class="meta-status">
+                    <span class="pulse-dot"></span>
+                    <span>Systems Operational / 2026.Q1</span>
+                </div>
+
+                <div class="brand-content">
+                    <img src="logo.png" alt="Insight | 内容实验室" class="brand-logo">
+                    <h1>灵感捕捉计划</h1>
+                    <p class="brand-sub">每一粒漂浮的灵感，都在等待它的实验室。</p>
+                </div>
+
+                <div class="event-progress" id="ep">
+                    <div class="ep-header">
+                        <span class="ep-label">Campaign Timeline</span>
+                        <span class="ep-status" id="ep-percent">0%</span>
+                    </div>
+                    <div class="ep-track">
+                        <div class="ep-fill" id="ep-fill"></div>
+                    </div>
+                    <div class="ep-footer">
+                        <span>2026.01.26</span>
+                        <span>2026.01.30</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="featured-area">
+                <a href="https://em.xiaohongshu.com/detail/EM_202503_PROJECT_02?shareId=NTAwMDM3OTQz&activity=EM_202504_2&subTab=EM_202504_3"
+                    target="_blank" class="featured-card">
+                    <span class="fc-tag">号外：EXTRA MILE</span>
+                    <div class="fc-content">
+                        <h3 class="fc-title">EM冠军押宝——AI笔记项目</h3>
+                        <span class="fc-arrow">→</span>
+                    </div>
+                    <span class="fc-sub">AI笔记，无限创意</span>
+                </a>
+            </div>
+
+            <div class="hero-links">
+                <a href="https://docs.xiaohongshu.com/doc/010862a5a167b832949e3fe72c76ed57" target="_blank"
+                    class="hero-link-item">
+                    <div class="hl-content">
+                        <span class="hl-label">Project Details</span>
+                        <div class="hl-title">活动规则</div>
+                    </div>
+                    <span class="hl-arrow">→</span>
+                </a>
+                <a href="https://insight.devops.xiaohongshu.com/insight/contentLab" target="_blank"
+                    class="hero-link-item">
+                    <div class="hl-content">
+                        <span class="hl-label">Data Portal</span>
+                        <div class="hl-title">活动平台</div>
+                    </div>
+                    <span class="hl-arrow">→</span>
+                </a>
+            </div>
+        </header>
+
+        <div class="transition-area">
+            <div class="pen-track"></div>
+            <div class="pen-trail"></div>
+        </div>
+
+        <main id="app">
+            <div id="loader">Verifying Remote Sync...</div>
+            <div id="canvas" class="grid">
+                <!-- Render Nodes -->
+            </div>
+        </main>
+
+        <footer>
+            <div id="ts">Status: Synced</div>
+            <div>Build 2026.01 / Insight Content Lab / Transparency Ops</div>
+        </footer>
+    </div>
+
+    <script>
+        const Engine = {
+            state: {
+                categories: [
+                    { id: 'zhuliren', label: 'Tier 01', name: '主理人奖', criteria: 'Metric > 20 Tasks' },
+                    { id: 'dashi', label: 'Tier 02', name: '大师奖', criteria: 'Metric 7-20 Tasks' },
+                    { id: 'dedao', label: 'Tier 03', name: '得到奖', criteria: 'Metric 2-6 Tasks' },
+                    { id: 'fuqi', label: 'Tier 04', name: '福气奖', criteria: 'Metric 1 Task' }
+                ],
+                source: {
+                    zhuliren: [],
+                    dashi: [],
+                    dedao: [],
+                    fuqi: []
+                }
+            },
+
+            async boot() {
+                console.log('[Engine] Booting system...');
+                this.updateTimeline();
+                await this.fetchData();
+                setInterval(() => this.updateTimeline(), 60000); // 每一分钟更新一次进度条
+            },
+
+            async fetchData() {
+                const ts = document.getElementById('ts');
+                console.log('[Engine] Attempting to sync data.csv...');
+
+                if (window.location.protocol === 'file:') {
+                    ts.innerText = "Error: Please use local server to view CSV";
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`./data.csv?cache_bust=${Date.now()}`);
+                    if (!response.ok) throw new Error(`Fetch Failed (Status ${response.status})`);
+
+                    const rawData = await response.text();
+                    // 兼容 \n 和 \r\n，并过滤掉因为文件末尾换行产生的空行
+                    const lines = rawData.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+
+                    if (lines.length < 2) throw new Error("CSV has no data rows");
+
+                    // 初始化容器
+                    const newSource = { zhuliren: [], dashi: [], dedao: [], fuqi: [] };
+
+                    // 解析内容 (跳过第一行表头)
+                    for (let i = 1; i < lines.length; i++) {
+                        const parts = lines[i].split(',');
+                        if (parts.length < 2) continue;
+
+                        const name = parts[0].trim();
+                        const pvs = parseInt(parts[1]);
+
+                        if (!name || isNaN(pvs)) continue;
+
+                        const user = { name, tasks: pvs };
+                        if (pvs > 20) newSource.zhuliren.push(user);
+                        else if (pvs >= 7) newSource.dashi.push(user);
+                        else if (pvs >= 2) newSource.dedao.push(user);
+                        else if (pvs === 1) newSource.fuqi.push(user);
+                    }
+
+                    // 更新状态并排序
+                    this.state.source = newSource;
+                    Object.keys(this.state.source).forEach(key => {
+                        this.state.source[key].sort((a, b) => b.tasks - a.tasks);
+                    });
+
+                    console.log('[Engine] Sync successful:', this.state.source);
+                    ts.innerText = `Status: Synced (${lines.length - 1} users fetched at ${new Date().toLocaleTimeString()})`;
+                    this.render();
+                } catch (e) {
+                    console.error('[Engine] Sync Critical Error:', e);
+                    ts.innerText = `Status: Sync Failed (${e.message})`;
+                    // 虽然失败了，也要调用 render 来关闭加载状态
+                    this.render();
+                }
+            },
+
+            render() {
+                const canvas = document.getElementById('canvas');
+                const loader = document.getElementById('loader');
+                if (loader) loader.style.display = 'none';
+
+                if (!canvas) return;
+                canvas.innerHTML = '';
+
+                this.state.categories.forEach((cat, index) => {
+                    const pool = this.state.source[cat.id] || [];
+                    const card = document.createElement('section');
+                    card.className = 'card';
+                    card.style.animation = `fadeIn 0.8s ease forwards ${index * 0.1}s`;
+
+                    const bgNum = (index + 1).toString().padStart(2, '0');
+                    const listHtml = pool.length > 0
+                        ? pool.map(c => `
+                            <li class="candidate-item">
+                                <div class="c-info">
+                                    <span class="c-name">${c.name}</span>
+                                    <span class="c-dept">${c.tasks} Tasks</span>
+                                </div>
+                                <span class="c-score">QUALIFIED</span>
+                            </li>
+                        `).join('')
+                        : '<div class="empty" style="font-size:10px; color:var(--text-dim); padding:40px 0; letter-spacing: 0.1em;">NO CANDIDATES DETECTED</div>';
+
+                    card.innerHTML = `
+                        <div class="bg-number">${bgNum}</div>
+                        <div class="award-info">
+                            <span class="award-label">${cat.label}</span>
+                            <h2 class="award-name">${cat.name}</h2>
+                            <p class="award-criteria">${cat.criteria}</p>
+                        </div>
+                        <ul class="candidate-list">${listHtml}</ul>
+                    `;
+                    canvas.appendChild(card);
+                });
+            },
+
+            updateTimeline() {
+                const start = new Date('2026-01-26T00:00:00');
+                const end = new Date('2026-01-30T23:59:59');
+                const now = new Date();
+                let progress = ((now - start) / (end - start)) * 100;
+                progress = Math.max(0, Math.min(100, progress));
+
+                const fill = document.getElementById('ep-fill');
+                const perc = document.getElementById('ep-percent');
+                if (fill) fill.style.width = `${progress}%`;
+                if (perc) perc.innerText = `${Math.floor(progress)}%`;
+            }
+        };
+
+        window.onload = () => Engine.boot();
+    </script>
+</body>
+
+</html>
