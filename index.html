@@ -396,7 +396,7 @@
         /* --- Grid Section --- */
         .grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 1px;
             background-color: var(--divider);
             border-bottom: 1px solid var(--divider);
@@ -711,14 +711,12 @@
             state: {
                 categories: [
                     { id: 'zhuliren', label: 'Tier 01', name: '主理人奖', criteria: 'Metric > 20 Tasks' },
-                    { id: 'dashi', label: 'Tier 02', name: '大师奖', criteria: 'Metric 7-20 Tasks' },
-                    { id: 'dedao', label: 'Tier 03', name: '得到奖', criteria: 'Metric 2-6 Tasks' },
-                    { id: 'fuqi', label: 'Tier 04', name: '福气奖', criteria: 'Metric 1 Task' }
+                    { id: 'yuanqi', label: 'Tier 02', name: '元气奖', criteria: 'Metric 2-20 Tasks' },
+                    { id: 'fuqi', label: 'Tier 03', name: '福气奖', criteria: 'Metric 1 Task' }
                 ],
                 source: {
                     zhuliren: [],
-                    dashi: [],
-                    dedao: [],
+                    yuanqi: [],
                     fuqi: []
                 }
             },
@@ -750,7 +748,7 @@
                     if (lines.length < 2) throw new Error("CSV has no data rows");
 
                     // 初始化容器
-                    const newSource = { zhuliren: [], dashi: [], dedao: [], fuqi: [] };
+                    const newSource = { zhuliren: [], yuanqi: [], fuqi: [] };
 
                     // 解析内容 (跳过第一行表头)
                     for (let i = 1; i < lines.length; i++) {
@@ -764,8 +762,7 @@
 
                         const user = { name, tasks: pvs };
                         if (pvs > 20) newSource.zhuliren.push(user);
-                        else if (pvs >= 7) newSource.dashi.push(user);
-                        else if (pvs >= 2) newSource.dedao.push(user);
+                        else if (pvs >= 2) newSource.yuanqi.push(user);
                         else if (pvs === 1) newSource.fuqi.push(user);
                     }
 
